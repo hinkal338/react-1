@@ -1,0 +1,30 @@
+{
+  "name": "react-1",
+  "version": "1.0.0",
+  "description": "React development",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hinkal338/react-1.git"
+  },
+  "author": "Hinkal Jain",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hinkal338/react-1/issues"
+  },
+  "homepage": "https://github.com/hinkal338/react-1#readme",
+  "devDependencies": {
+    "parcel": "^2.11.0",
+    "process": "^0.11.10"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "broswerslist": [
+    "last 2 version"
+  ]
+}
