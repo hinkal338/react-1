@@ -2,8 +2,9 @@
   "name": "react-1",
   "version": "1.0.0",
   "description": "React development",
-  "main": "app.js",
   "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
     "test": "jest"
   },
   "repository": {
