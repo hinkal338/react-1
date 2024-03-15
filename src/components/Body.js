@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import { useEffect, useState } from "react";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 //Whenever a state variable is updated react re-renders the component
 const Body = () => {
@@ -24,6 +25,15 @@ const Body = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const onlineStatus = useOnlineStatus();
+  if (onlineStatus === false) {
+    return (
+      <h1>
+        Looks you're not connected to internet !! Please check your connection.
+      </h1>
+    );
+  }
 
   return listOfRestaurants.length === 0 ? (
     <Shimmer />
