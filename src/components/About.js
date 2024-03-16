@@ -13,9 +13,8 @@ class About extends React.Component {
     console.log("Parent render");
     return (
       <div>
-        <h1>About</h1>
+        <h1 className="text-[30px] font-bold m-4">About</h1>
         <UserClass name={"First Jain Class"} location={"Udaipur class"} />
-
       </div>
     );
   }

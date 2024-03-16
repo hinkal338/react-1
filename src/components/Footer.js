@@ -1,10 +1,10 @@
 const Footer = () => {
   return (
-    <div className="footer">
-      <div className="footer-content">© Food Technologies</div>
-      <div className="footer-content">Terms & Conditions</div>
-      <div className="footer-content">Address</div>
-      <div className="footer-content">Contact Us</div>
+    <div className="flex m-4 bg-black text-cyan-50">
+      <div className="p-24">© Food Technologies</div>
+      <div className="p-24">Terms & Conditions</div>
+      <div className="p-24">Address</div>
+      <div className="p-24">Contact Us</div>
     </div>
   );
 };

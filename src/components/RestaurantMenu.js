@@ -43,22 +43,22 @@ const RestaurantMenu = () => {
   }
 
   return (
-    <div className="menu">
-      <h1>{name}</h1>
-      <p>
+    <div className="p-5">
+      <h1 className="font-bold p-4 text-[30px]">{name}</h1>
+      <p className="m-4">
         {cuisines.join(", ")} - {costForTwoMessage}
       </p>
-      <h2>Menu</h2>
+      <h2 className="m-4 font-semibold text-[25px]">Menu</h2>
       <ul>
         {itemCards.map((item) => {
           return (
-            <li key={item?.card?.info?.id}>
+            <li className="m-4" key={item?.card?.info?.id}>
               <div className="menu-heading">
                 {item?.card?.info?.name} - ₹
                 {item?.card?.info?.defaultPrice / 100 ||
                   item?.card?.info?.price / 100}
               </div>
-              <div className="menu-description">
+              <div className="text-gray-500">
                 {item?.card?.info?.description}
               </div>
             </li>
