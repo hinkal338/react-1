@@ -1,70 +1,49 @@
 import useRestaurantMenu from "../utils/useRestaurantMenu";
+import RestaurantCategory from "./RestaurantCategory";
 import Shimmer from "./Shimmer";
 import { useParams } from "react-router";
+import { useState } from "react";
 
 const RestaurantMenu = () => {
-  //const [resInfo, setResInfo] = useState(null);
-
-  // const params = useParams();
-  // console.log(params);
-
+  const [showIndex, setShowIndex] = useState(0);
   const { resId } = useParams();
-  console.log(resId);
-
-  // useEffect(() => {
-  //   fetchMenu();
-  // }, []);
-
-  // const fetchMenu = async () => {
-  //   const data = await fetch(MENU_API + resId);
-  //   const json = await data.json();
-  //   console.log(json);
-
-  //   setResInfo(json.data);
-  // };
 
   const resInfo = useRestaurantMenu(resId);
-  console.log("resInfo ,", resInfo);
 
   const info = resInfo?.cards[0]?.card?.card?.info;
-  console.log(info);
 
   const name = info?.name;
   const cuisines = info?.cuisines;
   const costForTwoMessage = info?.costForTwoMessage;
 
-  const itemCards =
-    resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[5].card.card
-      .itemCards;
-  console.log("ItemCards   ,", itemCards);
+  const categories =
+    resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
+      (c) =>
+        c?.card?.card?.["@type"] ===
+        "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+    );
 
   if (resInfo === null) {
     return <Shimmer />;
   }
 
   return (
-    <div className="p-5">
-      <h1 className="font-bold p-4 text-[30px]">{name}</h1>
-      <p className="m-4">
+    <div className="p-5 text-center">
+      <h1 className="font-bold my-6 text-2xl">{name}</h1>
+      <p className="font-bold text-lg">
         {cuisines.join(", ")} - {costForTwoMessage}
       </p>
       <h2 className="m-4 font-semibold text-[25px]">Menu</h2>
-      <ul>
-        {itemCards.map((item) => {
-          return (
-            <li className="m-4" key={item?.card?.info?.id}>
-              <div className="menu-heading">
-                {item?.card?.info?.name} - ₹
-                {item?.card?.info?.defaultPrice / 100 ||
-                  item?.card?.info?.price / 100}
-              </div>
-              <div className="text-gray-500">
-                {item?.card?.info?.description}
-              </div>
-            </li>
-          );
-        })}
-      </ul>
+      {categories.map((category, index) => (
+        <RestaurantCategory
+          key={category?.card?.card?.title}
+          data={category?.card?.card}
+          showItems={index === showIndex ? true : false}
+          setShowIndex={() => {
+            setShowIndex(index);
+          }}
+        />
+      ))}
     </div>
   );
 };

@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { LOGO_URL } from "../utils/constants";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 const Header = () => {
+  const { loggedInUser } = useContext(UserContext);
   const [btnName, setBtnName] = useState("Login");
   const onlineStatus = useOnlineStatus();
   return (
@@ -48,6 +50,7 @@ const Header = () => {
               {btnName}
             </button>
           </li>
+          <li className="px-4 py-1 font-bold">{loggedInUser}</li>
         </ul>
       </div>
     </div>

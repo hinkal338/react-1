@@ -1,11 +1,15 @@
 import { Link } from "react-router-dom";
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, { withOpenLabel } from "./RestaurantCard";
 import Shimmer from "./Shimmer";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
+
+const RestaurantCardWithOpenLabel = withOpenLabel(RestaurantCard);
 
 //Whenever a state variable is updated react re-renders the component
 const Body = () => {
+  const { loggedInUser, setUserName } = useContext(UserContext);
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
   const [searchText, setSearchText] = useState("");
@@ -16,10 +20,10 @@ const Body = () => {
     );
     const json = await data.json();
     setListOfRestaurants(
-      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
     setFilteredList(
-      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
   };
   useEffect(() => {
@@ -52,7 +56,6 @@ const Body = () => {
           <button
             className="px-4 py-1 bg-blue-400 mx-5 rounded-lg"
             onClick={() => {
-              console.log(searchText);
               const filteredList = listOfRestaurants.filter((res) =>
                 res.info.name.toLowerCase().includes(searchText.toLowerCase())
               );
@@ -75,6 +78,14 @@ const Body = () => {
             Top Rated Restaurants
           </button>
         </div>
+        <div className="m-4 p-4">
+          <label>LoggedIn User: </label>
+          <input
+            className="border border-black"
+            value={loggedInUser}
+            onChange={(e) => setUserName(e.target.value)}
+          ></input>
+        </div>
       </div>
       <div className="flex flex-wrap hover:cursor-pointe">
         {filteredList.map((restaurant) => (
@@ -83,7 +94,11 @@ const Body = () => {
             key={restaurant.info.id}
             className="link"
           >
-            <RestaurantCard resData={restaurant} />
+            {restaurant.info.availability.opened ? (
+              <RestaurantCardWithOpenLabel resData={restaurant} />
+            ) : (
+              <RestaurantCard resData={restaurant} />
+            )}
           </Link>
         ))}
       </div>
